@@ -4,15 +4,17 @@ This wordpress plugin adds geolocation functionnality for your articles. It allo
 
 # Usage
 
-On an archive page, you are looking restaurants located within 10 km of this latitude [50.8385607] and this longitude[4.37526040] :
+Example :
+
+On an archive page, you are looking for posts, in the "restaurant" category, located within 10 km from 50.8385607 latitude & 4.37526040 longitude :
 
 http://www.example.com/category/restaurant?latitude=50.8385607&longitude=4.37526040&distance=10
 
-You can also do it on the search page with the keyword "super" :
+You can also do it on the search page with search keywords :
 
-http://www.example.com/?s=super&latitude=50.8385607&longitude=4.37526040&distance=10
+http://www.example.com/?s=keywords&latitude=50.8385607&longitude=4.37526040&distance=10
 
-# Requirement
+# Requirements
 
 You need a Google Places API KEY for the Google place autocomplete service.
 
