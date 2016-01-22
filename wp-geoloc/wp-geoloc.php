@@ -42,3 +42,11 @@
 include('includes/geo-data-store.php');
 include('includes/functions.php');
 include('includes/settings.php');
+include('includes/widget-search.php');
+include('includes/shortcode-search.php');
+
+add_action('plugins_loaded', 'wpgeoloc_init');
+
+function wpgeoloc_init() {
+ load_plugin_textdomain( 'wpgeoloc', false, dirname(plugin_basename(__FILE__)).'/languages/' );
+}

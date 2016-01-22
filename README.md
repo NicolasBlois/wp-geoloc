@@ -14,6 +14,12 @@ You can also do it on the search page with search keywords :
 
 http://www.example.com/?s=keywords&latitude=50.8385607&longitude=4.37526040&distance=10
 
+A widget to search for geolocated content is available.
+
+There is also a shortcode to include it where you want. Usage : [wpgeoloc]
+
+Available in English and French
+
 # Requirements
 
 You need a Google Places API KEY for the Google place autocomplete service.
@@ -31,5 +37,12 @@ This plugin is based on "Geo Data Store" plugin.
 * Enjoy the geolocated requests within URL.
 
 # Changelog
+
+1.0.1 :
+
+* New : widget to search geolocated content.
+* New : shortcode to include the geolocated search form in any post.
+* New : translations in French
+* Fix : Prevent XSS and other attacks
 
 1.0.0 : Initial release

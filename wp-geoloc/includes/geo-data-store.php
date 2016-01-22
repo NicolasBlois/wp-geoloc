@@ -47,21 +47,21 @@ if ( ! class_exists( 'sc_GeoDataStore' ) )
 			// Hook into when Wordpress updates or adds meta data
 			add_action( 'added_post_meta', array( __CLASS__, 'after_post_meta' ), 10, 4 );
 			add_action( 'updated_post_meta', array( __CLASS__, 'after_post_meta' ), 10, 4 );
-            add_action( 'updated_postmeta', array( __CLASS__, 'after_post_meta' ), 10, 4 );
+      add_action( 'updated_postmeta', array( __CLASS__, 'after_post_meta' ), 10, 4 );
 
 			// Hook into when Wordpress deletes meta data
 			add_action( 'deleted_post_meta', array( __CLASS__, 'delete_post_meta' ), 10, 4 );
-            add_action( 'deleted_postmeta', array( __CLASS__, 'delete_postmeta' ), 10, 1 );
+      add_action( 'deleted_postmeta', array( __CLASS__, 'delete_postmeta' ), 10, 1 );
 
-            // Setup filter on keys so has some valid data
-            add_filter( 'sc_geodatastore_meta_keys', array( __CLASS__, 'setup_keys' ), 1, 1 );
+      // Setup filter on keys so has some valid data
+      add_filter( 'sc_geodatastore_meta_keys', array( __CLASS__, 'setup_keys' ), 1, 1 );
 
 			// Setup activation hook
 			register_activation_hook( __FILE__, array( __CLASS__, 'activate' ) );
 
 			// Define the permission to re-index
 			if( ! defined( 'SC_GDS_REINDEX_PERMISSION' ) )
-                define( 'SC_GDS_REINDEX_PERMISSION', 'manage_options' );
+          define( 'SC_GDS_REINDEX_PERMISSION', 'manage_options' );
 
 			// Add reindex plugin link
 			add_filter( 'plugin_action_links', array( __CLASS__, 'plugin_action_links' ), 10, 2 );
