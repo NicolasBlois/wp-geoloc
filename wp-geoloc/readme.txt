@@ -49,7 +49,6 @@ github : https://github.com/NicolasBlois/wp-geoloc
 = 1.0.2 =
 * standardization of code
 
-== Changelog ==
 = 1.0.1 =
 * New : widget to search geolocated content.
 * New : shortcode to include the geolocated search form in any post.
