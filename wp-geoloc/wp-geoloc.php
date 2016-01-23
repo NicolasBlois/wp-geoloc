@@ -12,7 +12,7 @@
  * Plugin Name:       WP Geoloc
  * Plugin URI:        https://wordpress.org/plugins/wp-geoloc/
  * Description:       This plugin adds geolocation functionnality for your articles. It allows you to request for articles based on latitude, longitude and distance provided as GET parameters in URL.
- * Version:           1.0.0
+ * Version:           1.0.2
  * Author:            Nicolas Blois
  * Author URI:        https://wordpress.org/plugins/wp-geoloc/
  * Text Domain:       wpgeoloc
@@ -48,5 +48,5 @@ include('includes/shortcode-search.php');
 add_action('plugins_loaded', 'wpgeoloc_init');
 
 function wpgeoloc_init() {
- load_plugin_textdomain( 'wpgeoloc', false, dirname(plugin_basename(__FILE__)).'/languages/' );
+ load_plugin_textdomain( 'wp-geoloc', false, dirname(plugin_basename(__FILE__)).'/languages/' );
 }

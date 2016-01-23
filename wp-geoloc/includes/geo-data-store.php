@@ -1,13 +1,4 @@
 <?php
-/*
-Plugin Name: Geo Data Store
-Plugin URI: http://l3rady.com/projects/geo-data-store/
-Description: Stores lng/lat co-ordinates in a better optimized table
-Author: Scott Cariss
-Version: 2.0.3
-Author URI: http://l3rady.com/
-*/
-
 /*  Copyright 2012  Scott Cariss  (email : scott@l3rady.com)
 
     This program is free software; you can redistribute it and/or modify
@@ -24,7 +15,6 @@ Author URI: http://l3rady.com/
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
 
 // Not a WordPress context? Stop.
 ! defined( 'ABSPATH' ) and exit;

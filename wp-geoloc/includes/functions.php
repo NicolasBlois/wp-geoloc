@@ -35,7 +35,6 @@ function wpgeoloc_load_google_js() {
             if (!place.geometry) {
               jQuery( "#autocomplete_message" ).addClass( "error" );
             }else{
-              console.log(place);
               document.getElementById("formatted_address").value = place.formatted_address;
               document.getElementById("latitude").value = place.geometry.location.lat();
               document.getElementById("longitude").value = place.geometry.location.lng();
@@ -50,19 +49,19 @@ add_action('admin_menu', 'wpgeoloc_add_custom_box');
 
 function wpgeoloc_add_custom_box() {
   $types = array( 'post', 'videogallery' );
-  foreach( $types as $type ) {
-    add_meta_box('geolocation_sectionid', esc_html__( 'Geotag', 'wpgeoloc' ), 'wpgeoloc_custom_box', $type, 'advanced' );
+  foreach( $types as $type) {
+    add_meta_box('geolocation_sectionid', esc_html__( 'Geotag', 'wp-geoloc' ), 'wpgeoloc_custom_box', $type, 'advanced' );
   }
 }
 
 function wpgeoloc_custom_box() {
   echo '<input type="hidden" id="geolocation_nonce" name="geolocation_nonce" value="' . wp_create_nonce(plugin_basename(__FILE__) ) . '" />
         <div id="locationField">
-          <span id="autocomplete_message">'.esc_html__("Please select an address from search results", "wpgeoloc").'</span>
-          <input id="autocomplete" placeholder="'.esc_html__("Type an address here", "wpgeoloc").'" type="text" style="width:100%;" value="'.esc_attr(get_post_meta(get_the_ID(), 'autocomplete',true)).'"></input>
+          <span id="autocomplete_message">'.esc_html__("Please select an address from search results", "wp-geoloc").'</span>
+          <input id="autocomplete" placeholder="'.esc_html__("Type an address here", "wp-geoloc").'" type="text" style="width:100%;" value="'.esc_attr(get_post_meta(get_the_ID(), 'autocomplete',true)).'"></input>
           <input type="hidden" id="formatted_address" name="autocomplete" value="'.esc_attr(get_post_meta(get_the_ID(), 'autocomplete',true)).'">
-          <input class="field" id="latitude" name="latitude" placeholder="'.esc_html__("Latitude", "wpgeoloc").'" style="width:100%;" value="'.esc_attr(get_post_meta(get_the_ID(), 'latitude',true)).'"></input>
-          <input class="field" id="longitude" name="longitude" placeholder="'.esc_html__("Longitude", "wpgeoloc").'" style="width:100%;" value="'.esc_attr(get_post_meta(get_the_ID(), 'longitude',true)).'"></input>
+          <input class="field" id="latitude" name="latitude" placeholder="'.esc_html__("Latitude", "wp-geoloc").'" style="width:100%;" value="'.esc_attr(get_post_meta(get_the_ID(), 'latitude',true)).'"></input>
+          <input class="field" id="longitude" name="longitude" placeholder="'.esc_html__("Longitude", "wp-geoloc").'" style="width:100%;" value="'.esc_attr(get_post_meta(get_the_ID(), 'longitude',true)).'"></input>
         </div>
         <style>
           #autocomplete_message.error{
@@ -76,40 +75,49 @@ add_action('save_post', 'wpgeoloc_save_postdata');
 
 function wpgeoloc_save_postdata($post_id) {
 
-  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
     return $post_id;
+  }
 
-  if(isset($_POST['post_type']) && 'page' == $_POST['post_type'] ) {
+  if (isset($_POST['post_type']) && 'page' == $_POST['post_type']) {
 
-    if(!current_user_can('edit_page', $post_id))
+    if (!current_user_can('edit_page', $post_id)) {
       return $post_id;
+    }
 
   } else {
 
-    if(!current_user_can('edit_post', $post_id))
+    if (!current_user_can('edit_post', $post_id)) {
       return $post_id;
+    }
 
   }
 
-  if(isset($_POST['latitude']) && isset($_POST['longitude']) && isset($_POST['autocomplete'])){
-    //Clean GET parameters to avoid XSS and other attacks
-    $clean_latitude = preg_replace('/[^-a-zA-Z0-9-.]/', '', $_POST['latitude']);
-    $clean_longitude = preg_replace('/[^-a-zA-Z0-9-.]/', '', $_POST['longitude']);
-    $clean_autocomplete = sanitize_text_field($_POST['autocomplete']);
+  if (isset($_POST['latitude']) && isset($_POST['longitude']) && isset($_POST['autocomplete'])) {
+    //Clean POST parameters
+    $latitude = floatval($_POST['latitude']);
+    if (!is_numeric($latitude)) {
+      $latitude = 0 ;
+    }
+    $longitude = floatval($_POST['longitude']);
+    if (!is_numeric($longitude)) {
+      $longitude = 0 ;
+    }
+    $autocomplete = sanitize_text_field($_POST['autocomplete']);
     //Update Post Meta
-    update_post_meta($post_id, 'latitude', $clean_latitude);
-    update_post_meta($post_id, 'longitude', $clean_longitude);
-    update_post_meta($post_id, 'autocomplete', $clean_autocomplete);
-    update_post_meta($post_id, 'wpgeoloc_coords', $clean_latitude.",".$clean_longitude);
+    update_post_meta($post_id, 'latitude', $latitude);
+    update_post_meta($post_id, 'longitude', $longitude);
+    update_post_meta($post_id, 'autocomplete', $autocomplete);
+    update_post_meta($post_id, 'wpgeoloc_coords', $latitude.",".$longitude);
   }
 
   return $post_id;
 
 }
 
-add_filter( 'sc_geodatastore_meta_keys', 'posts_geodata' );
+add_filter( 'sc_geodatastore_meta_keys', 'wpgeoloc_posts_geodata' );
 
-function posts_geodata( $keys ){
+function wpgeoloc_posts_geodata( $keys ){
   $keys[] = "wpgeoloc_coords";
   return $keys;
 }
@@ -118,39 +126,45 @@ add_action('pre_get_posts','wpgeoloc_alter_query');
 
 function wpgeoloc_alter_query( $query ){
   global $wp_query, $sc_gds;
-  if(isset($_GET['latitude']) && isset($_GET['longitude']) && isset($_GET['distance'])){
+  if (isset($_GET['latitude']) && isset($_GET['longitude']) && isset($_GET['distance'])) {
+    //Clean GET parameters
+    $latitude = floatval($_GET['latitude']);
+    if (!is_numeric($latitude)) {
+      $latitude = 0 ;
+    }
+    $longitude = floatval($_GET['longitude']);
+    if (!is_numeric($longitude)) {
+      $longitude = 0 ;
+    }
+    $distance = floatval($_GET['distance']);
+    if (!is_numeric($distance)) {
+      $distance = 0;
+    }
     // Load instance of GeoDataStore
-    if ( ! isset( $sc_gds ) )
+    if (!isset( $sc_gds )) {
       $sc_gds = new sc_GeoDataStore();
-    //Clean GET parameters to avoid XSS and other attacks
-    $clean_latitude = preg_replace('/[^-a-zA-Z0-9-.]/', '', $_GET['latitude']);
-    $clean_longitude = preg_replace('/[^-a-zA-Z0-9-.]/', '', $_GET['longitude']);
-    $clean_distance = preg_replace('/[^-a-zA-Z0-9-.]/', '', $_GET['distance']);
-    $clean_distance = intval( $clean_distance );
-    if ( ! $clean_distance ) {
-      $clean_distance = 100;
     }
     // Just get the ID's of posts in range
-    $ids = (array) $sc_gds->getPostIDsOfInRange( "post", $clean_distance, $clean_latitude, $clean_longitude );
+    $ids = (array) $sc_gds->getPostIDsOfInRange( "post", $distance, $latitude, $longitude );
     // We we have no results then set an array just one that will trigger no posts found.
-    if( empty( $ids ) )
-     $wp_query->set( 'post__in', array(0) );
-    else
-     $wp_query->set( 'post__in', $ids );
-     $wp_query->set( 'orderby', 'post__in' );
+    if (empty( $ids )) {
+      $wp_query->set( 'post__in', array(0) );
+    }else{
+      $wp_query->set( 'post__in', $ids );
+      $wp_query->set( 'orderby', 'post__in' );
+    }
   }
 }
 
 add_action( 'wp_enqueue_scripts', 'wpgeoloc_enqueue_scripts' );
 
 function wpgeoloc_enqueue_scripts(){
-	wp_enqueue_style( 'wpgeoloc', plugins_url( '../css/wpgeoloc.css' , __FILE__ ) );
+	wp_enqueue_style( 'wpgeoloc', plugins_url( '../css/wp-geoloc.css' , __FILE__ ) );
   wp_enqueue_script(
 		'rangeslider',
     plugins_url( '../js/rangeslider.min.js' , __FILE__ ),
 		array( 'jquery' )
 	);
 }
-
 
 ?>

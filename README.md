@@ -37,6 +37,9 @@ This plugin is based on "Geo Data Store" plugin.
 * Enjoy the geolocated requests within URL.
 
 # Changelog
+1.0.2 :
+
+* standardization of code
 
 1.0.1 :
 

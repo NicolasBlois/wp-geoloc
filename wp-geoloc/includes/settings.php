@@ -34,15 +34,15 @@ function register_wpgeoloc_settings() {
 }
 
 function wpgeoloc_settings_page() {
-?>
+	?>
 	<div class="wrap">
-	<h2><?php echo esc_html__( 'WP Geoloc settings', 'wpgeoloc' ); ?></h2>
+	<h2><?php echo esc_html__( 'WP Geoloc settings', 'wp-geoloc' ); ?></h2>
 	<form method="post" action="options.php">
 	  <?php settings_fields( 'wpgeoloc-settings-group' ); ?>
 	  <?php do_settings_sections( 'wpgeoloc-settings-group' ); ?>
 	  <table class="form-table">
 	    <tr valign="top">
-		    <th scope="row"><?php echo esc_html__( 'Google Place API KEY', 'wpgeoloc' ); ?></th>
+		    <th scope="row"><?php echo esc_html__( 'Google Place API KEY', 'wp-geoloc' ); ?></th>
 		    <td>
 					<input type="text" name="google_api_key" value="<?php echo esc_attr( get_option('google_api_key') ); ?>" />
 				</td>
@@ -51,4 +51,7 @@ function wpgeoloc_settings_page() {
 	  <?php submit_button(); ?>
 	</form>
 	</div>
-<?php } ?>
+	<?php
+}
+
+?>

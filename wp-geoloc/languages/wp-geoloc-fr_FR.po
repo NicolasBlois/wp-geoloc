@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-geoloc-fr_FR\n"
+"POT-Creation-Date: 2016-01-23 00:14+0100\n"
+"PO-Revision-Date: 2016-01-23 00:14+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _e;__;esc_html__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-SearchPath-1: ../includes\n"
+
+#: ../includes/functions.php:54
+msgid "Geotag"
+msgstr "Géolocaliser"
+
+#: ../includes/functions.php:61 ../includes/shortcode-search.php:41
+#: ../includes/widget-search.php:63
+msgid "Please select an address from search results"
+msgstr "Sélectionnez une adresse depuis la liste"
+
+#: ../includes/functions.php:62 ../includes/shortcode-search.php:34
+#: ../includes/widget-search.php:56
+msgid "Type an address here"
+msgstr "Tapez une adresse ici"
+
+#: ../includes/functions.php:64
+msgid "Latitude"
+msgstr "Latitude"
+
+#: ../includes/functions.php:65
+msgid "Longitude"
+msgstr "Longitude"
+
+#: ../includes/shortcode-search.php:37 ../includes/widget-search.php:59
+msgid "Go"
+msgstr "Go"
+
+#: ../includes/shortcode-search.php:51 ../includes/widget-search.php:73
+msgid "Distance - km"
+msgstr "Distance - km"
+
+#: ../includes/widget-search.php:18 ../includes/widget-search.php:25
+#: ../includes/widget-search.php:118
+msgid "Location-based search"
+msgstr "Recherche géolocalisée"
+
+#: ../includes/widget-search.php:19
+#, fuzzy
+msgid "WP Geoloc search"
+msgstr "Paramètres de WP Geoloc"
+
+#: ../includes/widget-search.php:120
+msgid "Title "
+msgstr "Titre"
+
+#: ../includes/geo-data-store.php:86
+msgid "Re-index Table"
+msgstr "Ré-indexer la table"
+
+#: ../includes/settings.php:39
+msgid "WP Geoloc settings"
+msgstr "Paramètres de WP Geoloc"
+
+#: ../includes/settings.php:45
+msgid "Google Place API KEY"
+msgstr "Clé API Google Place"
