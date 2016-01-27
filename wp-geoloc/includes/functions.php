@@ -159,12 +159,8 @@ function wpgeoloc_alter_query( $query ){
 add_action( 'wp_enqueue_scripts', 'wpgeoloc_enqueue_scripts' );
 
 function wpgeoloc_enqueue_scripts(){
-	wp_enqueue_style( 'wpgeoloc', plugins_url( '../css/wp-geoloc.css' , __FILE__ ) );
-  wp_enqueue_script(
-		'rangeslider',
-    plugins_url( '../js/rangeslider.min.js' , __FILE__ ),
-		array( 'jquery' )
-	);
+  wp_enqueue_style( 'wpgeoloc', plugins_url( '../css/wp-geoloc.css' , __FILE__ ) );
+  wp_enqueue_script( 'rangeslider', plugins_url( '../js/rangeslider.min.js' , __FILE__ ), array( 'jquery' ) );
 }
 
 ?>
